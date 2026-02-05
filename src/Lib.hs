@@ -32,9 +32,6 @@ makeBaseFunctor ''HML
 data Fixpoint a = Max a | Min a deriving (Show, Eq)
 type Declaration a v = v -> Fixpoint (HML a v)
 
-data VarLog p v = Unevaluated v | Partial (Set p)
-data Log p a v = Log [HML a (VarLog p v)]
-
 data HMLEquation a v = HMLEquation {f:: HML a v, decl :: Declaration a v, groups :: [Fixpoint (Set v)]}
 
 
@@ -78,7 +75,17 @@ makeGroups declFn initF = let (gs, vs) = fixpoint extract ([], reachable initF) 
 makeSystem :: Ord v => HML a v -> Declaration a v -> Maybe (HMLEquation a v)
 makeSystem formular declFn = fmap (HMLEquation formular declFn) . makeGroups declFn . getDependencies $ formular
 
--- solveSystem :: System a v -> LTS p a ->
+prettyPrint :: (Show v) => HML a (Set p) -> String
+prettyPrint = cata p
+  where p (VarF s) = "\{" intercalate ", " (map show s) "\}"
+        p (AllF acts s) = show acts ++ s
+        p (ExF acts s)  = "<" ++ intercalate ", " (map show s) ++ ">" ++ s
+        p (AndF a b) = a ++ " \land " ++ b
+        p (OrF a b)  = a ++ " \lor " ++ b
+        p (TT)          = "\emptyset"
+        p (FF)          = "Proc"
 
--- cata pretty printer
+solveSystem :: System a v -> LTS p a -> Writer [String] (Set v)
+
+-- for each group -> (O_x(x,y), O_y(x,y)) steps
 
