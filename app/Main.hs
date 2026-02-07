@@ -5,7 +5,7 @@ import Data.Set
 import Data.Void
 
 
-data Proc = P1|P2|P3|P4|P5|P6|P7|P8|P9 deriving (Eq, Ord, Show)
+data Proc = P0|P1|P2|P3|P4|P5|P6|P7|P8|P9 deriving (Eq, Ord, Show)
 data Act = A|B|C deriving (Eq, Ord,Show)
 
 
@@ -39,14 +39,62 @@ testTrans = fromList
     Transition  P1 C P7
   ]
 
+haTrans = fromList [
+  Transition P0 B P4,
+  Transition P1 C P0,
+  Transition P1 B P3,
+  Transition P3 C P0,
+
+  Transition P4 B P7,
+
+  Transition P1 A P4,
+  Transition P4 B P1,
+
+  Transition P1 A P2,
+  Transition P1 B P5,
+
+  Transition P2 B P2,
+
+  Transition P5 A P6,
+  Transition P6 A P5,
+
+  Transition P5 B P5,
+  Transition P8 B P5,
+
+  Transition P5 C P2,
+  Transition P6 A P2,
+
+  Transition P6 C P9,
+  Transition P9 C P6,
+
+  Transition P9 C P9,
+
+  Transition P7 C P8,
+  Transition P9 A P8,
+
+  Transition P9 B P7,
+
+  Transition P3 A P4,
+  Transition P3 B P3,
+
+  Transition P7 A P3,
+  Transition P3 B P7]
+
+
 test = ltsFromTrans testTrans
+ha = ltsFromTrans haTrans
 
 data Varible = X|Y|Z deriving (Bounded, Eq, Enum, Show, Ord)
 
 decl :: Declaration Act Varible
 decl X = Max $ Ex [C] TT `And` Ex [A] (Var Y) `And` All [B] (Var X)
-decl Y = Max $ Ex [B] (Var X) `And` All acts (Var Y)                          where acts = Data.Set.toList . act $ test
+decl Y = Max $ Ex [B] (Var X) `And` Ex acts (Var Y)                          where acts = Data.Set.toList . act $ ha
 decl Z = Min $ (All [A] (Var Y) `And` Ex [B] (Var X)) `Or` All [B] (Var Z)
 
+testdecl X = Max $ Ex [A] TT `And` (All [B] (Var X) `And` Ex [C] (Var Y))
+testdecl Y = Max $ All [B] FF `Or` (All [A] (Var X) `And` All [B] (Var Y))
+
 main :: IO ()
-main = putStrLn . show . fmap groups $ makeSystem (Var Z) decl
+main = case fmap (solveSystem ha) (makeSystem (Var Z) decl) of
+  Just s -> putStrLn s
+  Nothing -> putStrLn "ERROR!"
