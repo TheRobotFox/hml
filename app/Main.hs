@@ -94,7 +94,24 @@ decl Z = Min $ (All [A] (Var Y) `And` Ex [B] (Var X)) `Or` All [B] (Var Z)
 testdecl X = Max $ Ex [A] TT `And` (All [B] (Var X) `And` Ex [C] (Var Y))
 testdecl Y = Max $ All [B] FF `Or` (All [A] (Var X) `And` All [B] (Var Y))
 
+
+tran = fromList [
+  Transition P1 A P0,
+  Transition P1 B P3,
+  Transition P3 A P0,
+  Transition P4 B P1,
+  Transition P1 A P2,
+  Transition P2 B P2,
+  Transition P3 B P3]
+
+lts = ltsFromTrans tran
+
+decl2 :: Declaration Act Varible
+decl2 Z = Min $ (All [A] (Var Y) `And` Ex [B] (Var X)) `Or` All [B] (Var Z)
+decl2 Y = Max $ Ex [B] (Var X) `And` Ex acts (Var Y)       where acts = Data.Set.toList . act $ lts
+decl2 X = Max $ Ex [B] TT `And` Ex [A] (Var Y) `And` All [B] (Var X)
+
 main :: IO ()
-main = case fmap (solveSystem ha) (makeSystem (Var Z) decl) of
+main = case fmap (solveSystem lts) (makeSystem (Var Z) decl2) of
   Just s -> putStrLn s
   Nothing -> putStrLn "ERROR!"
