@@ -26,7 +26,7 @@ This is a simple tool, which allows solving n-nested-recursive Systems on LTS an
 Define Processlabels, Actions and Variables
 
 ```haskell
-data Proc = P0|P1|P2|P3 deriving (Eq, Ord, Show)
+data Proc = P0|P1|P2|P3|P4 deriving (Eq, Ord, Show)
 data Act = A|B                          deriving (Eq, Ord,Show)
 data Variables = X|Y|Z                      deriving (Eq, Show, Ord)
 ```
