@@ -53,7 +53,9 @@ lts = ltsFromTrans trans
 
 ## Defining System of Equations
 
-Let's asume we want to solve a System of Equation like follows ![img](Test.svg)
+Let's asume we want to solve a System of Equation like the following
+
+![img](Test.svg)
 
 where we use the `act` record accessor to retrieve all Actions defined in our LTS. `Min` and `Max` are constructors for the `Fixpiont a` datatype.
 
