@@ -6,7 +6,7 @@
    version="1.1"
    id="svg977"
    sodipodi:docname="Test-1.svg"
-   inkscape:export-filename="Test-1.png"
+   inkscape:export-filename="Test-1.svg"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -311,6 +311,14 @@
          id="path45" />
     </clipPath>
   </defs>
+  <rect
+     style="fill:#ffffff;stroke-width:0.75"
+     id="rect977"
+     width="727.54437"
+     height="315.41296"
+     x="-1.475256"
+     y="-2.4112637"
+     ry="0" />
   <g
      fill="#000000"
      fill-opacity="1"
