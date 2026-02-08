@@ -1,25 +1,25 @@
-- [HML Solver and $\LaTeX$ Export](#org03fc61c)
-- [Usage](#orgdcbd025)
-  - [Define LTS](#orgcf73164)
-  - [Defining System of Equations](#org11e1281)
-  - [Create n-nested recursive System](#orgf9f9a18)
-  - [Solve System on LTS](#orgc5d3e84)
+- [HML Solver and $\LaTeX$ Export](#org50c8fc8)
+- [Usage](#orgbf07ec1)
+  - [Define LTS](#orgf847b35)
+  - [Defining System of Equations](#orgbb83cdb)
+  - [Create n-nested recursive System](#org48457bf)
+  - [Solve System on LTS](#org39496e6)
 
 
 
-<a id="org03fc61c"></a>
+<a id="org50c8fc8"></a>
 
 # HML Solver and $\LaTeX$ Export
 
 This is a simple tool, which allows solving n-nested-recursive Systems on LTS and export the required calculations as $\LaTeX$ Code. The exported Script uses following macros to model HML-Fromula
 
 
-<a id="orgdcbd025"></a>
+<a id="orgbf07ec1"></a>
 
 # Usage
 
 
-<a id="orgcf73164"></a>
+<a id="orgf847b35"></a>
 
 ## Define LTS
 
@@ -49,26 +49,26 @@ lts = ltsFromTrans trans
 ```
 
 
-<a id="org11e1281"></a>
+<a id="orgbb83cdb"></a>
 
 ## Defining System of Equations
 
-Let's asume we want to solve a System of Equation like follows ![img](output.svg)
+Let's asume we want to solve a System of Equation like follows ![img](Test.svg)
 
 where we use the `act` record accessor to retrieve all Actions defined in our LTS. `Min` and `Max` are constructors for the `Fixpiont a` datatype.
 
 
-<a id="orgf9f9a18"></a>
+<a id="org48457bf"></a>
 
 ## Create n-nested recursive System
 
 The fucntion `makeSystem :: HML a v -> Declaration a v -> HMLEquation a v` will transform the declaration into a n-nested-recursive System if possible. When the declaration is malformed, this means it contains mutually recursive Variables of varied Fixpoint-Types the function will return `Nothing`.
 
 
-<a id="orgc5d3e84"></a>
+<a id="org39496e6"></a>
 
 ## Solve System on LTS
 
 At last you'd use the function `solveSystem :: LTS p a -> HMLEquation a v -> String` which solves the whole System and produces the $\LaTeX$ Code documenting the calculation steps as a String. The Result might look like this
 
-![img](output2.svg)
+![img](Test-1.svg)
